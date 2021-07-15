@@ -1,4 +1,4 @@
-SELECT p.name as 'person', o.name 'object', c.like as 'prefer level',
+SELECT p.name as 'person', o.name 'target', o.type as 'type', c.like as 'prefer level',
 c.content as 'context', c.timestamp as 'timestamp(UTC)'
 FROM person p, object o, context c
 WHERE p.id=c.person_id AND o.id=c.object_id
