@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS person (
+	id UUID NOT NULL,
+   	name VARCHAR NOT NULL,
+	dob TEXT,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS object (
+	id UUID NOT NULL,
+   	name VARCHAR UNIQUE NOT NULL,
+	type VARCHAR NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS context (
+	id UUID NOT NULL,
+	content TEXT NOT NULL,
+	like INTEGER NOT NULL,
+	timestamp CHAR(15) NOT NULL,
+   	person_id UUID NOT NULL,
+	object_id UUID NOT NULL,
+	FOREIGN KEY (person_id) REFERENCES person (id),
+	FOREIGN KEY (object_id) REFERENCES object (id),
+	PRIMARY KEY (id)
+);

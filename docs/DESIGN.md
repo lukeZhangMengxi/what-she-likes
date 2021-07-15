@@ -28,7 +28,7 @@
 ### 2.1 The App should take inputs of object name, type, context for a selected person
 - SQL database tables:
     - Object Table: object_id (unique), name (unique), type, super_type
-    - Context Table: person_id, object_id, context (small paragraph)
+    - Context Table: person_id, object_id, context (small paragraph), like, timestamp
     - Person Table: person_id (unique), name, DOB
 
 <br/>
