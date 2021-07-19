@@ -1,10 +1,10 @@
 -- Create new table for object_type
 CREATE TABLE object_type (
 	id UUID,
-    parent_id UUID,
+	parent_id UUID,
    	name VARCHAR UNIQUE NOT NULL,
 	PRIMARY KEY (id),
-    FOREIGN KEY (parent_id) REFERENCES object_type (id)
+	FOREIGN KEY (parent_id) REFERENCES object_type (id)
 );
 
 CREATE TRIGGER gen_UUID_object_type
@@ -12,10 +12,10 @@ AFTER INSERT ON object_type
 FOR EACH ROW
 WHEN (NEW.id IS NULL)
 BEGIN
-   UPDATE object_type SET id = (select hex( randomblob(4)) || '-' || hex( randomblob(2))
-             || '-' || '4' || substr( hex( randomblob(2)), 2) || '-'
-             || substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
-             substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)) ) WHERE rowid = NEW.rowid;
+	UPDATE object_type SET id = (select hex( randomblob(4)) || '-' || hex( randomblob(2))
+			|| '-' || '4' || substr( hex( randomblob(2)), 2) || '-'
+			|| substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
+			substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)) ) WHERE rowid = NEW.rowid;
 END;
 
 -- Migrate type names from table(object) to the new table(object_type)
