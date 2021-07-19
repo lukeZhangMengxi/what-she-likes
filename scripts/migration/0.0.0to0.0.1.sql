@@ -28,26 +28,15 @@ RENAME TO to_be_deleted;
 
 -- Create table(object)
 CREATE TABLE object (
-	id UUID,
+	id UUID NOT NULL,
    	name VARCHAR UNIQUE NOT NULL,
 	type_id UUID,
 	PRIMARY KEY (id)
 );
 
-CREATE TRIGGER gen_UUID_object
-AFTER INSERT ON object
-FOR EACH ROW
-WHEN (NEW.id IS NULL)
-BEGIN
-   UPDATE object SET id = (select hex( randomblob(4)) || '-' || hex( randomblob(2))
-             || '-' || '4' || substr( hex( randomblob(2)), 2) || '-'
-             || substr('AB89', 1 + (abs(random()) % 4) , 1)  ||
-             substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)) ) WHERE rowid = NEW.rowid;
-END;
-
 -- Migrate all data from table(to_be_deleted) to table(object)
-INSERT INTO object (name, type_id)
-SELECT o.name, ot.id
+INSERT INTO object (id, name, type_id)
+SELECT o.id, o.name, ot.id
 FROM to_be_deleted o, object_type ot
 WHERE o.type = ot.name;
 
